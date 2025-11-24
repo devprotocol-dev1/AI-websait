@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <title>ИИ-ассистент автоматизации и Битрикс24</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <style>
+      /* Базовые стили */
+      body {
+        margin: 0;
+        font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+          sans-serif;
+        background: #0b1020;
+        color: #f5f5f5;
+      }
+
+      a {
+        color: inherit;
+        text-decoration: none;
+      }
+
+      header {
+        padding: 20px 40px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background: rgba(5, 8, 20, 0.9);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        position: sticky;
+        top: 0;
+        z-index: 10;
+      }
+
+      .logo {
+        font-weight: 700;
+        font-size: 20px;
+      }
+
+      .logo span {
+        color: #4ade80; /* зеленый акцент */
+      }
+
+      nav a {
+        margin-left: 20px;
+        font-size: 14px;
+        opacity: 0.85;
+      }
+
+      nav a:hover {
+        opacity: 1;
+      }
+
+      .btn-primary {
+        display: inline-block;
+        padding: 10px 20px;
+        border-radius: 999px;
+        background: linear-gradient(135deg, #4ade80, #22c55e);
+        color: #020617;
+        font-weight: 600;
+        border: none;
+        cursor: pointer;
+      }
+
+      .btn-primary:hover {
+        filter: brightness(1.05);
+      }
+
+      .btn-outline {
+        display: inline-block;
+        padding: 10px 20px;
+        border-radius: 999px;
+        border: 1px solid rgba(148, 163, 184, 0.7);
+        background: transparent;
+        color: #e5e7eb;
+        cursor: pointer;
+        margin-left: 10px;
+      }
+
+      .btn-outline:hover {
+        background: rgba(15, 23, 42, 0.9);
+      }
+
+      main {
+        padding: 40px 20px 80px;
+        max-width: 1100px;
+        margin: 0 auto;
+      }
+
+      /* Hero-блок */
+      .hero {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 40px;
+        padding: 40px 0 60px;
+      }
+
+      .hero-text {
+        flex: 1 1 320px;
+      }
+
+      .hero-title {
+        font-size: 32px;
+        line-height: 1.2;
+        margin-bottom: 16px;
+      }
+
+      .hero-title span {
+        color: #4ade80;
+      }
+
+      .hero-subtitle {
+        color: #9ca3af;
+        max-width: 480px;
+        margin-bottom: 24px;
+      }
+
+      .hero-badges {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-bottom: 24px;
+      }
+
+      .badge {
+        font-size: 12px;
+        padding: 6px 12px;
+        border-radius: 999px;
+        background: rgba(148, 163, 184, 0.16);
+        border: 1px solid rgba(148, 163, 184, 0.4);
+      }
+
+      .hero-visual {
+        flex: 1 1 260px;
+        min-width: 260px;
+        padding: 20px;
+        border-radius: 18px;
+        background: radial-gradient(circle at top left, #22c55e22, transparent),
+          radial-gradient(circle at bottom right, #38bdf822, transparent),
+          #020617;
+        border: 1px solid rgba(148, 163, 184, 0.3);
+        box-shadow: 0 20px 50px rgba(15, 23, 42, 0.8);
+      }
+
+      .hero-visual-title {
+        font-size: 16px;
+        margin-bottom: 10px;
+      }
+
+      .hero-visual-sub {
+        font-size: 13px;
+        color: #9ca3af;
+        margin-bottom: 16px;
+      }
+
+      .flow-step {
+        display: flex;
+        align-items: center;
+        margin-bottom: 10px;
+        font-size: 13px;
+      }
+
+      .flow-step span {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 22px;
+        height: 22px;
+        border-radius: 999px;
+        background: rgba(34, 197, 94, 0.18);
+        color: #4ade80;
+        font-size: 12px;
+        margin-right: 8px;
+      }
+
+      .flow-arrow {
+        margin: 6px 0 10px 12px;
+        font-size: 11px;
+        color: #6b7280;
+      }
+
+      /* Блоки преимуществ */
+      .section-title {
+        font-size: 22px;
+        margin-bottom: 10px;
+      }
+
+      .section-subtitle {
+        color: #9ca3af;
+        margin-bottom: 24px;
+        max-width: 700px;
+      }
+
+      .cards {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+        gap: 18px;
+        margin-bottom: 40px;
+      }
+
+      .card {
+        padding: 18px 18px 16px;
+        border-radius: 14px;
+        background: rgba(15, 23, 42, 0.85);
+        border: 1px solid rgba(148, 163, 184, 0.35);
+      }
+
+      .card-title {
+        font-size: 16px;
+        margin-bottom: 8px;
+      }
+
+      .card-text {
+        font-size: 14px;
+        color: #9ca3af;
+      }
+
+      /* Форма заявки */
+      .form-block {
+        padding: 24px 20px;
+        border-radius: 16px;
+        background: linear-gradient(
+          135deg,
+          rgba(34, 197, 94, 0.12),
+          rgba(37, 99, 235, 0.08)
+        );
+        border: 1px solid rgba(52, 211, 153, 0.6);
+        margin-top: 30px;
+      }
+
+      .form-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 16px;
+        margin-top: 16px;
+      }
+
+      label {
+        font-size: 13px;
+        display: block;
+        margin-bottom: 4px;
+      }
+
+      input,
+      textarea {
+        width: 100%;
+        box-sizing: border-box;
+        padding: 8px 10px;
+        border-radius: 8px;
+        border: 1px solid rgba(148, 163, 184, 0.7);
+        background: rgba(15, 23, 42, 0.9);
+        color: #e5e7eb;
+        font-size: 13px;
+      }
+
+      textarea {
+        resize: vertical;
+        min-height: 70px;
+      }
+
+      .form-row {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 10px;
+        margin-top: 14px;
+      }
+
+      .form-hint {
+        font-size: 12px;
+        color: #e5e7eb;
+        opacity: 0.8;
+      }
+
+      footer {
+        padding: 20px 40px 30px;
+        font-size: 12px;
+        color: #6b7280;
+        border-top: 1px solid rgba(31, 41, 55, 1);
+        margin-top: 40px;
+      }
+
+      @media (max-width: 640px) {
+        header {
+          padding: 14px 16px;
+        }
+
+        main {
+          padding: 24px 14px 50px;
+        }
+
+        .hero-title {
+          font-size: 26px;
+        }
+
+        footer {
+          padding: 16px 14px 24px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="logo">AI<span>Assistant</span></div>
+      <nav>
+        <a href="#features">Функции</a>
+        <a href="#bitrix">Битрикс24</a>
+        <a href="#contact">Контакты</a>
+      </nav>
+    </header>
+
+    <main>
+      <!-- Hero -->
+      <section class="hero">
+        <div class="hero-text">
+          <h1 class="hero-title">
+            ИИ-ассистент для автоматизации<br />
+            <span>с интеграцией Битрикс24</span>
+          </h1>
+          <p class="hero-subtitle">
+            Умный помощник, который отвечает на запросы клиентов, создаёт
+            задачи, заполняет CRM и запускает бизнес‑процессы в Битрикс24
+            автоматически.
+          </p>
+
+          <div class="hero-badges">
+            <div class="badge">Автоответы 24/7</div>
+            <div class="badge">Интеграция с Битрикс24</div>
+            <div class="badge">Экономия до 40% времени менеджеров</div>
+          </div>
+
+          <div>
+            <a href="#contact" class="btn-primary">Оставить заявку</a>
+            <a href="#features" class="btn-outline">Подробнее о возможностях</a>
+          </div>
+        </div>
+
+        <div class="hero-visual">
+          <div class="hero-visual-title">Сценарий работы ассистента</div>
+          <div class="hero-visual-sub">Пример типичного бизнес‑процесса</div>
+
+          <div class="flow-step">
+            <span>1</span> Клиент пишет в WhatsApp / на сайт
+          </div>
+          <div class="flow-arrow">↓</div>
+
+          <div class="flow-step">
+            <span>2</span> ИИ-ассистент отвечает и уточняет детали запроса
+          </div>
+          <div class="flow-arrow">↓</div>
+
+          <div class="flow-step">
+            <span>3</span> Автосоздание лида и сделки в Битрикс24
+          </div>
+          <div class="flow-arrow">↓</div>
+
+          <div class="flow-step">
+            <span>4</span> Постановка задач менеджеру и уведомления отделу
+            продаж
+          </div>
+        </div>
+      </section>
+
+      <!-- Возможности ИИ-ассистента -->
+      <section id="features">
+        <h2 class="section-title">Что умеет ИИ-ассистент</h2>
+        <p class="section-subtitle">
+          Ассистент обучается на ваших скриптах, базе знаний и истории
+          обращений. Он понимает естественный язык, работает по сценариям и
+          помогает не терять ни одного лида.
+        </p>
+
+        <div class="cards">
+          <div class="card">
+            <div class="card-title">Автоответы клиентам</div>
+            <div class="card-text">
+              Отвечает на типовые вопросы, отправляет прайсы, презентации,
+              собирает контактные данные и передаёт только целевые запросы
+              менеджерам.
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-title">Умные формы и заявки</div>
+            <div class="card-text">
+              Задаёт уточняющие вопросы, чтобы собрать максимум информации по
+              заявке, и сразу заполняет поля лида в CRM.
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-title">Автоматизация рутинных задач</div>
+            <div class="card-text">
+              Создаёт задачи, напоминания, встречи, отправляет сообщения в
+              рабочие чаты, чтобы сотрудники не тратили время на ручной ввод.
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-title">Аналитика и отчёты</div>
+            <div class="card-text">
+              Формирует краткие сводки по диалогам, лидам и задачам. Помогает
+              увидеть узкие места в воронке продаж и обработке заявок.
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Блок про Битрикс24 -->
+      <section id="bitrix">
+        <h2 class="section-title">Интеграция с Битрикс24</h2>
+        <p class="section-subtitle">
+          Ассистент подключается к вашему Битрикс24 по официальному API. Все
+          действия фиксируются в CRM: лиды, сделки, задачи, комментарии и
+          сообщения.
+        </p>
+
+        <div class="cards">
+          <div class="card">
+            <div class="card-title">Автосоздание сущностей</div>
+            <div class="card-text">
+              Создание лидов, контактов и сделок при новых обращениях.
+              Присвоение источника, ответственного и стадии воронки.
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-title">Запуск бизнес‑процессов</div>
+            <div class="card-text">
+              Ассистент может запускать роботов и бизнес‑процессы: отправка КП,
+              напоминания, смена стадий, уведомления в чаты.
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-title">Работа с чатами</div>
+            <div class="card-text">
+              Поддержка открытых линий, чатов с сайта, соцсетей. Эскалация
+              диалога на живого менеджера по триггерам.
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Форма заявки -->
+      <section id="contact" class="form-block">
+        <h2 class="section-title">Получить консультацию</h2>
+        <p class="section-subtitle">
+          Оставьте контакты — обсудим, какие процессы в вашей компании можно
+          отдать ИИ-ассистенту и как лучше связать его с Битрикс24.
+        </p>
+
+        <form id="lead-form">
+          <div class="form-grid">
+            <div>
+              <label for="name">Имя и компания</label>
+              <input
+                id="name"
+                name="name"
+                type="text"
+                placeholder="Иван, ООО «Пример»"
+              />
+            </div>
+            <div>
+              <label for="phone">Телефон или WhatsApp</label>
+              <input
+                id="phone"
+                name="phone"
+                type="text"
+                placeholder="+7 (___) ___‑__‑__"
+              />
+            </div>
+            <div>
+              <label for="email">E‑mail</label>
+              <input
+                id="email"
+                name="email"
+                type="email"
+                placeholder="you@example.com"
+              />
+            </div>
+          </div>
+
+          <div style="margin-top: 12px">
+            <label for="comment">Какие задачи хотите автоматизировать?</label>
+            <textarea
+              id="comment"
+              name="comment"
+              placeholder="Например: первичные обращения с сайта и WhatsApp, напоминания клиентам, отчёты для руководителя..."
+            ></textarea>
+          </div>
+
+          <div class="form-row">
+            <button type="submit" class="btn-primary">Отправить</button>
+            <div class="form-hint">
+              Нажимая кнопку, вы соглашаетесь с обработкой персональных данных.
+            </div>
+          </div>
+        </form>
+      </section>
+    </main>
+
+    <footer>
+      <div>
+        © 2025 AI Assistant Automation. ИИ‑ассистент автоматизации + Битрикс24.
+      </div>
+      <div>
+        Этот сайт — демонстрационный шаблон. Вы можете адаптировать текст и
+        стиль под свой проект.
+      </div>
+    </footer>
+
+    <!-- Скрипт отправки формы -->
+    <script>
+      document
+        .getElementById("lead-form")
+        .addEventListener("submit", function (e) {
+          e.preventDefault();
+
+          const form = e.target;
+          const formData = new FormData(form);
+
+          fetch("send.php", {
+            method: "POST",
+            body: formData,
+          })
+            .then((r) => r.text())
+            .then((text) => {
+              if (text.trim() === "OK") {
+                alert(
+                  "Спасибо! Ваша заявка отправлена. Мы скоро с вами свяжемся."
+                );
+                form.reset();
+              } else {
+                alert(
+                  "Ошибка при отправке. Попробуйте ещё раз или напишите нам напрямую."
+                );
+              }
+            })
+            .catch((err) => {
+              alert(
+                "Ошибка соединения. Проверьте интернет или попробуйте позже."
+              );
+              console.error(err);
+            });
+        });
+    </script>
+  </body>
+</html>
